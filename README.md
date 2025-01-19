@@ -1,2 +1,3 @@
 # currency-converter
-Minimalistic currency converter. Used by exchangerate-api
+Minimalistic browser extension "currency converter". Used by exchangerate-api
+
