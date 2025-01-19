@@ -6,25 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveSettingsBtn = document.getElementById('save-settings-btn');
     const apiKeyInput = document.getElementById('api-key');
 
-    // Function to mask API key
-    function maskApiKey(apiKey) {
-        return apiKey.slice(0, -4).replace(/./g, '*') + apiKey.slice(-4);
-    }
-
     // Load API key from storage
     chrome.storage.local.get([apiKeyStorageKey], function (result) {
         if (result[apiKeyStorageKey]) {
-            apiKeyInput.value = maskApiKey(result[apiKeyStorageKey]);
+            apiKeyInput.value = result[apiKeyStorageKey];
             updateApiInfo(result[apiKeyStorageKey]);
         }
     });
 
     // Save API key to storage
     saveSettingsBtn.addEventListener('click', function () {
-        const apiKey = apiKeyInput.value.replace(/\*/g, ''); // Remove masking before saving
+        const apiKey = apiKeyInput.value;
         chrome.storage.local.set({ [apiKeyStorageKey]: apiKey }, function () {
             alert('API Key saved');
-            apiKeyInput.value = maskApiKey(apiKey);
             updateApiInfo(apiKey);
         });
     });
@@ -47,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const amount = document.getElementById('amount').value;
         const fromCurrency = document.getElementById('from_currency').value;
-        const apiKey = apiKeyInput.value.replace(/\*/g, ''); // Remove masking before using
+        const apiKey = apiKeyInput.value;
         const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency}`;
 
         fetch(apiUrl)
@@ -60,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (currency !== fromCurrency) {
                             const rate = data.conversion_rates[currency];
                             const convertedAmount = (amount * rate).toFixed(2);
-                            results += `<p>${amount} ${fromCurrency} is equal to ${convertedAmount} ${currency}</p>`;
+                            results += `<p>${amount} ${fromCurrency} =>  ${convertedAmount} ${currency}</p>`;
                         }
                     });
                     document.getElementById('result').innerHTML = results;
@@ -80,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.result === 'success') {
-                    apiInfoElement.innerText = `Requests left: ${data.requests_remaining}, Expiration: ${data.refresh_day_of_month} days`;
+                    apiInfoElement.innerText = `Requests left: ${data.requests_remaining}`;
                 } else {
                     apiInfoElement.innerText = 'Failed to retrieve API info.';
                 }
