@@ -9,17 +9,18 @@
 <body>
     <div class="container">
         <h1>Currency Converter</h1>
+        <p class="caption">By GANTER & GitHub Copilot</p> <!-- Caption added here -->
         <p id="api-info"></p>
         <form id="currency-form">
             <label for="amount">Amount:</label>
             <input type="number" id="amount" name="amount" step="0.01" required><br><br>
-
+        
             <label for="from_currency">From:</label>
             <div class="currency-buttons" id="currency-buttons">
                 <!-- Currency buttons will be dynamically added here -->
             </div>
             <input type="hidden" id="from_currency" name="from_currency" value="USD"><br><br>
-
+        
             <div class="button-container">
                 <button type="submit" class="submit-btn">Convert</button>
                 <button id="settings-btn" class="settings-btn">Settings</button>
@@ -30,8 +31,12 @@
             <label for="api-key">API Key:</label>
             <input type="text" id="api-key" name="api-key"><br><br>
             <label for="num-buttons">Number of Currency Buttons:</label>
-            <input type="number" id="num-buttons" name="num-buttons" min="3" max="6" value="6"><br><br>
-            <button id="save-settings-btn" class="save-btn">Save</button>
+            <input type="number" id="num-buttons" name="num-buttons" min="3" max="7" value="3"><br><br>
+            <div class="settings-btn-container">
+                <div class="checkmark-container"></div> <!-- Checkmark container moved here -->
+                <button id="save-settings-btn" class="save-btn">Save</button>
+                <button id="exit-settings-btn" class="exit-btn">Exit</button>
+            </div>
         </div>
         <div id="result"></div>
     </div>

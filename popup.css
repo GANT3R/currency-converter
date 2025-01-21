@@ -24,6 +24,29 @@ h1 {
     color: #00ff00;
 }
 
+.caption {
+    color: #ffffff;
+    font-size: 10px;
+    margin-top: -10px;
+    animation: shimmer 3s infinite;
+    background: linear-gradient(90deg, #00ff00, #ffffff, #00ff00);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 label {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
@@ -37,13 +60,22 @@ label {
 }
 
 .currency-btn {
-    background-color: #505050;
+    position: relative;
+    background-color: #00b300;
     color: #ffffff;
     border: none;
-    padding: 10px;
+    padding: 10px 30px 10px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.currency-btn::after {
+    content: ' ▼';
+    position: absolute;
+    right: 10px;
+    font-size: 12px;
+    color: #ffffff;
 }
 
 .currency-btn:hover {
@@ -62,8 +94,8 @@ label {
 }
 
 .submit-btn, .settings-btn {
-    background-color: #00ff00;
-    color: #000000;
+    background-color: #505050;
+    color: #ffffff;
     border: 2px solid #ffffff;
     width: 80px;
     height: 80px;
@@ -79,7 +111,7 @@ label {
 }
 
 .submit-btn:hover, .settings-btn:hover {
-    background-color: #00b300;
+    background-color: #00ff00;
     box-shadow: 0 0 10px #00ff00;
 }
 
@@ -111,13 +143,19 @@ input[type="number"], input[type="text"] {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
+    width: 250px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
 
+.settings-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .context-menu {
-    display: none; /* Hide by default */
+    display: none;
     position: absolute;
     background-color: #3e3e3e;
     border: 1px solid #505050;
@@ -126,8 +164,28 @@ input[type="number"], input[type="text"] {
     padding: 10px;
     margin: 0;
     z-index: 100;
-    max-height: 200px; /* Adjust height for scrolling */
+    max-height: 150px;
     overflow-y: auto;
+    width: 95px;
+}
+
+.context-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.context-menu::-webkit-scrollbar-track {
+    background: #2e2e2e;
+    border-radius: 5px;
+}
+
+.context-menu::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 5px;
+    border: 2px solid #2e2e2e;
+}
+
+.context-menu::-webkit-scrollbar-thumb:hover {
+    background: #00b300;
 }
 
 .context-menu li {
@@ -141,34 +199,53 @@ input[type="number"], input[type="text"] {
     background-color: #00ff00;
 }
 
-/* Save button styling */
 .save-btn {
-    background-color: #00ff00;
-    color: #000000;
+    background-color: #505050;
+    color: #ffffff;
     border: 2px solid #ffffff;
     width: 100px;
     height: 40px;
-    margin: 3px auto; /* Center the button */
-    border-radius: 20px; /* Make it oval-shaped */
+    margin: 3px;
+    border-radius: 20px;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
-    display: block; /* Center the button */
     text-align: center;
 }
 
 .save-btn:hover {
-    background-color: #00b300;
+    background-color: #00ff00;
     box-shadow: 0 0 10px #00ff00;
 }
 
+.exit-btn {
+    background-color: #ff5050;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    width: 100px;
+    height: 40px;
+    margin: 3px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.exit-btn:hover {
+    background-color: #ff0000;
+    box-shadow: 0 0 10px #ff5050;
+}
+
+
 .checkmark-container {
     display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
     position: relative;
-    width: 0;
-    height: 0;
-    margin-left: 10px;
 }
 
 .checkmark {

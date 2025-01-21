@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     const apiKeyStorageKey = 'exchangeRateApiKey';
     const numButtonsStorageKey = 'numCurrencyButtons';
+    const selectedCurrenciesStorageKey = 'selectedCurrencies';
     const apiInfoElement = document.getElementById('api-info');
     const settingsBtn = document.getElementById('settings-btn');
     const settingsWindow = document.getElementById('settings-window');
     const saveSettingsBtn = document.getElementById('save-settings-btn');
+    const exitSettingsBtn = document.getElementById('exit-settings-btn'); // Exit button reference
     const apiKeyInput = document.getElementById('api-key');
     const numButtonsInput = document.getElementById('num-buttons');
     const currencyButtonsContainer = document.getElementById('currency-buttons');
@@ -14,9 +16,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const checkmark = document.createElement('div');
     checkmark.className = 'checkmark';
     checkmarkContainer.appendChild(checkmark);
-    saveSettingsBtn.parentNode.appendChild(checkmarkContainer);
+    
+    // Define currencies with their symbols
+    const currencies = {
+        'USD': '$',
+        'EUR': '€',
+        'CNY': '¥',
+        'UAH': '₴',
+        'ISK': 'kr',
+        'TRY': '₺',
+        'CAD': 'C$',
+        'GBP': '£',
+        'JPY': '¥',
+        'AUD': 'A$',
+        'CHF': 'CHF',
+        'NOK': 'kr',
+        'SEK': 'kr',
+        'INR': '₹',
+        'BRL': 'R$',
+        'MXN': '$',
+        'PLN': 'zł',
+        'RUB': '₽' // Added RUB
+    };
+    
     const defaultCurrencies = ['USD', 'EUR', 'CNY']; // Set default currencies
-    const additionalCurrencies = ['UAH', 'ISK', 'TRY', 'CAD', 'GBP', 'JPY', 'AUD', 'CHF', 'NOK', 'SEK', 'INR', 'BRL', 'MXN', 'PLN']; // Added PLN
+    const additionalCurrencies = Object.keys(currencies).filter(currency => !defaultCurrencies.includes(currency));
+
     let currentNumButtons = 3; // Default to 3 buttons
 
     numButtonsInput.min = 3;
@@ -27,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
         button.type = 'button';
         button.className = 'currency-btn';
         button.dataset.currency = currency;
-        button.textContent = currency;
+        button.textContent = `${currency} (${currencies[currency]})`;
         button.addEventListener('click', () => {
             document.getElementById('from_currency').value = currency;
             document.querySelectorAll('.currency-btn').forEach(btn => btn.classList.remove('selected'));
@@ -47,12 +72,13 @@ document.addEventListener('DOMContentLoaded', function () {
         allCurrencies.forEach(currency => {
             const listItem = document.createElement('li');
             listItem.dataset.currency = currency;
-            listItem.textContent = currency;
+            listItem.textContent = `${currency} (${currencies[currency]})`;
             listItem.onclick = () => {
-                button.textContent = currency;
+                button.textContent = `${currency} (${currencies[currency]})`;
                 button.dataset.currency = currency;
                 contextMenu.style.display = 'none';
-                updateCurrencyButtons(); // Update buttons to reflect changes
+                updateCurrencyButtons();
+                saveSelectedCurrencies(); // Save selected currencies to storage
             };
             contextMenu.appendChild(listItem);
         });
@@ -85,24 +111,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Load API key and number of buttons from storage
-    chrome.storage.local.get([apiKeyStorageKey, numButtonsStorageKey], function (result) {
-        if (result[apiKeyStorageKey]) {
-            apiKeyInput.value = result[apiKeyStorageKey];
-            updateApiInfo(result[apiKeyStorageKey]);
-        }
-        if (result[numButtonsStorageKey]) {
-            currentNumButtons = result[numButtonsStorageKey];
-            numButtonsInput.value = currentNumButtons;
-        }
-        updateCurrencyButtons();
-    });
-
-    // Save settings to storage
-    saveSettingsBtn.addEventListener('click', function () {
-        const apiKey = apiKeyInput.value; // No masking of API key
+    function saveSettings() {
+        const apiKey = apiKeyInput.value;
         currentNumButtons = parseInt(numButtonsInput.value, 10);
-        chrome.storage.local.set({ [apiKeyStorageKey]: apiKey, [numButtonsStorageKey]: currentNumButtons }, function () {
+        chrome.storage.local.set({
+            [apiKeyStorageKey]: apiKey,
+            [numButtonsStorageKey]: currentNumButtons,
+            [selectedCurrenciesStorageKey]: Array.from(currencyButtonsContainer.children).map(btn => btn.dataset.currency)
+        }, function () {
             // Show the animated checkmark
             checkmark.classList.add('show');
             setTimeout(() => {
@@ -111,12 +127,46 @@ document.addEventListener('DOMContentLoaded', function () {
             updateApiInfo(apiKey);
             updateCurrencyButtons();
         });
+    }
+
+    function saveSelectedCurrencies() {
+        chrome.storage.local.set({
+            [selectedCurrenciesStorageKey]: Array.from(currencyButtonsContainer.children).map(btn => btn.dataset.currency)
+        });
+    }
+
+    // Load settings from storage
+    chrome.storage.local.get([apiKeyStorageKey, numButtonsStorageKey, selectedCurrenciesStorageKey], function (result) {
+        if (result[apiKeyStorageKey]) {
+            apiKeyInput.value = result[apiKeyStorageKey];
+            updateApiInfo(result[apiKeyStorageKey]);
+        }
+        if (result[numButtonsStorageKey]) {
+            currentNumButtons = result[numButtonsStorageKey];
+            numButtonsInput.value = currentNumButtons;
+        }
+        if (result[selectedCurrenciesStorageKey]) {
+            result[selectedCurrenciesStorageKey].forEach(currency => {
+                const button = createCurrencyButton(currency);
+                currencyButtonsContainer.appendChild(button);
+            });
+        } else {
+            updateCurrencyButtons();
+        }
     });
+
+    // Save settings to storage
+    saveSettingsBtn.addEventListener('click', saveSettings);
 
     // Toggle settings window visibility
     settingsBtn.addEventListener('click', function (event) {
         event.preventDefault(); // Prevent the default form submission
         settingsWindow.style.display = settingsWindow.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Exit settings window
+    exitSettingsBtn.addEventListener('click', function () {
+        settingsWindow.style.display = 'none';
     });
 
     document.getElementById('currency-form').addEventListener('submit', function (event) {
@@ -142,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (currency !== fromCurrency) {
                             const rate = data.conversion_rates[currency];
                             const convertedAmount = (amount * rate).toFixed(2);
-                            results += `<p>${amount} ${fromCurrency} is equal to ${convertedAmount} ${currency}</p>`;
+                            results += `<p>${amount} ${fromCurrency} ==> ${convertedAmount} ${currency}</p>`;
                         }
                     });
                     document.getElementById('result').innerHTML = results;
@@ -173,4 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error fetching API info:', error);
             });
     }
+
+    const settingsBtnContainer = document.querySelector('.settings-btn-container');
+    settingsBtnContainer.insertBefore(checkmarkContainer, settingsBtnContainer.firstChild);
 });
