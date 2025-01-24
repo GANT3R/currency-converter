@@ -1,12 +1,13 @@
 # Currency converter
 Minimalistic browser extension "currency converter". Used by exchangerate-api
 
-## Last update
+## Last update 1.79 > 1.8
 ---
-- After exiting the extension, button settings are saved automatically.
 - GUI updates:
-   * Added symbols for currency selection buttons.
-   * Added new currency: RUB
-   * Added author's inscription
-   * Added button to the settings menu
-   * Changed colors and fonts    
+  * (Fixed) When you select a currency, it is highlighted in a different color.
+  * Added the current version caption.  
+- New currencies:
+    * ($) Argentine pessos
+    * (лв) Bulgarian levs
+    * (₪) Israeli shekel
+    * (₫) Vietnamese dong
