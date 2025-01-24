@@ -36,7 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
         'BRL': 'R$',
         'MXN': '$',
         'PLN': 'zł',
-        'RUB': '₽' // Added RUB
+        'RUB': '₽',
+        'ARS': '$',
+        'BGN': 'лв',
+        'ILS': '₪',
+        'VND': '₫' 
     };
     
     const defaultCurrencies = ['USD', 'EUR', 'CNY']; // Set default currencies
@@ -224,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    // Append the checkmarkContainer in the settings-btn-container
     const settingsBtnContainer = document.querySelector('.settings-btn-container');
     settingsBtnContainer.insertBefore(checkmarkContainer, settingsBtnContainer.firstChild);
 });
