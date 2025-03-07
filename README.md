@@ -1,13 +1,13 @@
 # Currency converter
 Minimalistic browser extension "currency converter". Used by exchangerate-api
 
-## Last update 1.79 > 1.8
+## Last update 1.8 > 1.81
 ---
 - GUI updates:
-  * (Fixed) When you select a currency, it is highlighted in a different color.
-  * Added the current version caption.  
+  * Minor changes
 - New currencies:
-    * ($) Argentine pessos
-    * (лв) Bulgarian levs
-    * (₪) Israeli shekel
-    * (₫) Vietnamese dong
+    * (DKK) Danish krone
+    * (E£) Egyptian pound
+    * (Dh) United Arab Emirates dirham
+    * (Dh) Moroccan Dirham
+    * (SR) Saudi riyal
