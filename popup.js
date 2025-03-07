@@ -24,14 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
         'CNY': '¥',
         'UAH': '₴',
         'ISK': 'kr',
+        'NOK': 'kr',
+        'SEK': 'kr',
+        'DKK': 'kr',
         'TRY': '₺',
         'CAD': 'C$',
         'GBP': '£',
         'JPY': '¥',
         'AUD': 'A$',
         'CHF': 'CHF',
-        'NOK': 'kr',
-        'SEK': 'kr',
         'INR': '₹',
         'BRL': 'R$',
         'MXN': '$',
@@ -40,7 +41,11 @@ document.addEventListener('DOMContentLoaded', function () {
         'ARS': '$',
         'BGN': 'лв',
         'ILS': '₪',
-        'VND': '₫' 
+        'VND': '₫',
+        'EGP': 'E£',
+        'SAR': 'SR',
+        'AED': 'Dh',
+        'MAD': 'Dh',
     };
     
     const defaultCurrencies = ['USD', 'EUR', 'CNY']; // Set default currencies
