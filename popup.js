@@ -3,9 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const apiKeyStorageKey = 'exchangeRateApiKey';
     const numButtonsStorageKey = 'numCurrencyButtons';
     const selectedCurrenciesStorageKey = 'selectedCurrencies';
-    const themeStorageKey = 'selectedTheme'; // Key for theme preference
+    const themeStorageKey = 'selectedTheme';
 
-    // --- DOM Element References ---
     const apiInfoElement = document.getElementById('api-info');
     const settingsBtn = document.getElementById('settings-btn');
     const settingsWindow = document.getElementById('settings-window');
@@ -298,12 +297,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Event Listeners & Initial Load ---
     chrome.storage.local.get(
-        [apiKeyStorageKey, numButtonsStorageKey, selectedCurrenciesStorageKey, themeStorageKey], // Add theme key
+        [apiKeyStorageKey, numButtonsStorageKey, selectedCurrenciesStorageKey, themeStorageKey],
         function (result) {
-            // Apply theme first
-            applyTheme(result[themeStorageKey] || 'default'); // Use 'default' if not set
+            applyTheme(result[themeStorageKey] || 'default');
 
-            // Load other settings
             let loadedApiKey = '';
             if (result[apiKeyStorageKey]) {
                 apiKeyInput.value = result[apiKeyStorageKey];
@@ -470,4 +467,4 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-}); // End of DOMContentLoaded
+});
