@@ -1,13 +1,14 @@
-# Currency converter
+# Currency converter3
 Minimalistic browser extension "currency converter". Used by exchangerate-api
 
-## Last update 1.8 > 1.81
+## Last update 1.81 > 1.9
 ---
 - GUI updates:
-  * Minor changes
+  * New Icon
+  * New GUI design
+  * Added Theme Switcher
+  * Added function to hide/display API key in settings
 - New currencies:
-    * (DKK) Danish krone
-    * (E£) Egyptian pound
-    * (Dh) United Arab Emirates dirham
-    * (Dh) Moroccan Dirham
-    * (SR) Saudi riyal
+    * (₨) Pakistani Rupee
+    * (৳) Bangladeshi Taka
+    * (₸) Kazakhstani Tenge
