@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
   'ARS': '$',
   'BGN': 'лв',
   'MAD': 'Dh',
-  'BTC': '₿',
   'PKR': '₨',
   'BDT': '৳',
   'KZT': '₸'
