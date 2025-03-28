@@ -9,43 +9,82 @@
 <body>
     <div class="container">
         <h1>Currency Converter</h1>
-        <p class="caption">By GANTER & GitHub Copilot</p> <!-- Caption added here -->
+        <p class="caption">By GANTER</p>
         <p id="api-info"></p>
+
         <form id="currency-form">
             <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" step="0.01" required><br><br>
-        
+            <input type="number" id="amount" name="amount" step="0.01" required>
+
             <label for="from_currency">From:</label>
             <div class="currency-buttons" id="currency-buttons">
-                <!-- Currency buttons will be dynamically added here -->
+
             </div>
-            <input type="hidden" id="from_currency" name="from_currency" value="USD"><br><br>
-        
+            <input type="hidden" id="from_currency" name="from_currency" value="USD">
+
             <div class="button-container">
                 <button type="submit" class="submit-btn">Convert</button>
-                <button id="settings-btn" class="settings-btn">Settings</button>
+                <button type="button" id="settings-btn" class="settings-btn">Settings</button>
             </div>
-        <a class="version-link" href="https://github.com/GANT3R/currency-converter">version: 1.81 (?)</em>
         </form>
+
+        <a class="version-link" href="https://github.com/GANT3R/currency-converter" target="_blank" rel="noopener noreferrer">
+            version: 1.9 (?)
+        </a>
+
         <div id="settings-window" class="settings-window">
             <h2>Settings</h2>
-            <label for="api-key">ExchangeRate-API Key:</label>
-            <input type="text" id="api-key" name="api-key"><br><br>
-            <label for="num-buttons">Number of Currency Buttons:</label>
-            <input type="number" id="num-buttons" name="num-buttons" min="3" max="7" value="3"><br><br>
-            <div class="get-api-key">
-                <a href="https://www.exchangerate-api.com/"> >> Get API key << </a>
+
+            <div class="api-key-wrapper">
+                <label for="api-key">ExchangeRate-API Key:</label>
+                <input type="password" id="api-key" name="api-key">
+                <span id="toggleApiKey" class="api-key-toggle" title="Show API Key">
+                    <span class="icon-eye">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </span>
+                    <span class="icon-eye-off" style="display: none;">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                             <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                             <line x1="1" y1="1" x2="23" y2="23"></line>
+                         </svg>
+                    </span>
+                </span>
             </div>
+
+            <label for="num-buttons">Currency Buttons:</label>
+            <input type="number" id="num-buttons" name="num-buttons" min="3" max="7" value="3">
+
+             <div class="theme-toggle-wrapper">
+                 <label for="theme-toggle">Gradient Theme:</label>
+                 <label class="switch">
+                     <input type="checkbox" id="theme-toggle">
+                     <span class="slider round"></span>
+                 </label>
+             </div>
+
+
+            <a href="https://www.exchangerate-api.com" class="get-api-key" target="_blank" rel="noopener noreferrer">
+                >> Get API key <<
+            </a>
+
             <div class="settings-btn-container">
-                <div class="checkmark-container"></div> <!-- Checkmark container moved here -->
-                <button id="save-settings-btn" class="save-btn">Save</button>
-                <button id="exit-settings-btn" class="exit-btn">Exit</button>
+                <div class="checkmark-container">
+
+                </div>
+                <button type="button" id="save-settings-btn" class="save-btn">Save</button>
+                <button type="button" id="exit-settings-btn" class="exit-btn">Exit</button>
             </div>
         </div>
+
         <div id="result"></div>
+
     </div>
+
     <ul id="context-menu" class="context-menu">
-        <!-- Context menu items will be dynamically added here -->
+
     </ul>
 
     <script src="popup.js"></script>
